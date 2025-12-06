@@ -3,11 +3,6 @@
 ✅ Workflow diagrams
 ✅ Commands
 ✅ Basic examples for npm, NuGet, Python, Maven, Universal Packages
-✅ Clean Markdown formatting
-
-You can copy-paste directly into GitHub.
-If you want repo name ideas, I can provide too.
-
 ---
 
 # 📘 **Azure Artifacts – Complete Documentation (README.md)**

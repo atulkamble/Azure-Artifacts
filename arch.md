@@ -1,4 +1,4 @@
-**complete, production-ready `README.md`** for **Azure Artifacts** with
+**Azure Artifacts** 
 ✅ Architecture diagrams
 ✅ Workflow diagrams
 ✅ Commands

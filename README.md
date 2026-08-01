@@ -604,16 +604,8 @@ azure-artifacts-practice/
 ## 11.2 Create the Project
 
 ```bash
-mkdir azure-artifacts-practice
+git clone https://github.com/atulkamble/azure-artifacts-practice.git
 cd azure-artifacts-practice
-
-mkdir package
-
-touch package/app.py
-touch package/config.json
-touch package/deploy.sh
-touch .artifactignore
-touch azure-pipelines.yml
 ```
 
 ---
@@ -630,7 +622,7 @@ Code:
 
 ```python
 def hello() -> None:
-    print("Hello from the Cloudnautic Azure Artifacts package")
+    print("Hello from the Azure Artifacts package")
 
 
 if __name__ == "__main__":
@@ -646,7 +638,7 @@ python package/app.py
 Expected output:
 
 ```text
-Hello from the Cloudnautic Azure Artifacts package
+Hello from the Azure Artifacts package
 ```
 
 ---
@@ -748,16 +740,52 @@ Sign in:
 az login
 ```
 
+Sign in to Azure DevOps:
+```
+az devops login
+```
+if want to logout existing 
+
+check details 
+```
+az version
+az account show
+env | grep AZURE_DEVOPS
+```
+```
+az devops configure --list
+```
+and 
+```
+az config get extension.use_dynamic_install
+```
+```
+az devops logout
+unset AZURE_DEVOPS_EXT_PAT
+unset AZURE_DEVOPS_EXT_ARTIFACTTOOL_PATVAR
+rm -f ~/.azure/azuredevops/cli/config
+```
+## set new
+```
+export AZURE_DEVOPS_EXT_PAT="PASTE_NEW_PAT_HERE"
+```
+
+Create and Update Token form Azure DevOps Settings (PAT)
+Add Token: 
+
 Configure the default organization:
 
 ```bash
-az devops configure \
-  --defaults organization=https://dev.azure.com/cloudnautic
+az devops configure --defaults organization=https://dev.azure.com/cloudnautic
 ```
 
 Configure the default project:
 
 ```bash
+az devops configure --defaults project=project
+
+https://dev.azure.com/cloudnautic/project
+
 az devops configure \
   --defaults project=artifacts-project
 ```
@@ -770,18 +798,54 @@ az devops configure \
 
 ```bash
 ORGANIZATION="https://dev.azure.com/cloudnautic"
-PROJECT="artifacts-project"
+PROJECT="project"
 FEED="cloudnautic-feed"
 PACKAGE_NAME="cloudnautic-tools"
-PACKAGE_VERSION="1.0.0"
+PACKAGE_VERSION="1.0.4"
 PACKAGE_PATH="./package"
 ```
 
+## Verify 
+```
+echo "$ORGANIZATION"
+echo "$PROJECT"
+echo "$FEED"
+echo "$PACKAGE_NAME"
+echo "$PACKAGE_VERSION"
+echo "$PACKAGE_PATH"
+```
+
+## show project 
+```
+az devops project show \
+  --organization "https://dev.azure.com/cloudnautic" \
+  --project "project"
+```
+
+## test feed access 
+```
+az artifacts feed show \
+  --organization "https://dev.azure.com/cloudnautic" \
+  --project "project" \
+  --feed "cloudnautic-feed"
+```
 ---
+
+## verify the feed using the Azure DevOps REST API
+```
+az devops invoke \
+  --organization "https://dev.azure.com/cloudnautic" \
+  --area packaging \
+  --resource feeds \
+  --route-parameters project="project" \
+  --api-version "7.1-preview" \
+  --output json
+```
 
 ## 13.2 Publish to Project-Scoped Feed
 
 ```bash
+
 az artifacts universal publish \
   --organization "$ORGANIZATION" \
   --project "$PROJECT" \

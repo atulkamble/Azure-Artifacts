@@ -1,4 +1,4 @@
-# Azure Artifacts — Training Notes and Practical Labs
+# Azure Artifacts
 
 ## 1. Training Objectives
 
